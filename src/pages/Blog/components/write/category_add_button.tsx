@@ -1,6 +1,6 @@
 import * as React from "react";
 import {PlusOutlined} from "@ant-design/icons/lib";
-import {Button, Form, Input, Popover} from "antd";
+import {Button, Form, Input, message, Popover} from "antd";
 import {addNewCategory} from "@/pages/Blog/BlogService";
 import {useState} from "react";
 
@@ -10,10 +10,15 @@ export type CategorySubmitParams = {
   logo: string
 }
 
+type Props = {
+  onFresh: () => void
+}
+
 // 添加分类标签按钮
-const CategoryAddButton: React.FC = () => {
+const CategoryAddButton: React.FC<Props> = ({onFresh}) => {
 
   const [addLoading, setAddLoading] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
 
   // 提交
   const handleSubmit = async (values: CategorySubmitParams) => {
@@ -22,6 +27,10 @@ const CategoryAddButton: React.FC = () => {
     await addNewCategory(values);
 
     setAddLoading(false);
+
+    onFresh();
+    setVisible(false);
+    message.success('添加成功');
   }
 
 
@@ -55,7 +64,10 @@ const CategoryAddButton: React.FC = () => {
   return (
     <>
 
-      <Popover placement="right" title={'新增分类'} content={content} trigger="click">
+      <Popover placement="right" title={'新增分类'} content={content} trigger="click" visible={visible}
+               onVisibleChange={(visible) => {
+                 setVisible(visible);
+               }}>
         <Button
           shape='circle'
           type="default"

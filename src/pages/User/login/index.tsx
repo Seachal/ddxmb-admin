@@ -11,6 +11,7 @@ import type {LoginParamsType} from '@/services/login';
 import {fakeAccountLogin} from '@/services/login';
 import styles from './index.less';
 import Title from 'antd/lib/typography/Title';
+import ParticlesBg from 'particles-bg';
 
 const LoginMessage: React.FC<{
   content?: string;
@@ -73,84 +74,87 @@ const Login: React.FC = () => {
     setSubmitting(false);
   };
 
-  const {state,message} = userLoginState;
+  const {state, message} = userLoginState;
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <div className={styles.top}>
-          <div className={styles.header}>
-            <Link to="/">
-              <img alt="logo" className={styles.logo} src={"/logo.svg"}/>
-              <span className={styles.title}>典典的小卖部</span>
-            </Link>
+    <>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <div className={styles.top}>
+            <div className={styles.header}>
+              <Link to="/">
+                <img alt="logo" className={styles.logo} src={"/logo.svg"}/>
+                <span className={styles.title}>握草</span>
+              </Link>
+            </div>
+            <div className={styles.desc}>典典的小卖部,最强的开源跨平台淘宝客APP应用</div>
           </div>
-          <div className={styles.desc}>典典的小卖部,最强的开源跨平台淘宝客APP应用</div>
-        </div>
 
-        <div className={styles.main}>
-          <ProForm
-            initialValues={{
-              autoLogin: true,
-            }}
-            submitter={{
-              searchConfig: {
-                submitText: '登录',
-              },
-              render: (_, dom) => dom.pop(),
-              submitButtonProps: {
-                loading: submitting,
-                size: 'large',
-                style: {
-                  width: '100%',
+          <div className={styles.main}>
+            <ProForm
+              initialValues={{
+                autoLogin: true,
+              }}
+              submitter={{
+                searchConfig: {
+                  submitText: '登录',
                 },
-              },
-            }}
-            onFinish={async (values) => {
-              await handleSubmit(values as LoginParamsType);
-            }}
-          >
-            <Title level={1}>登录</Title>
+                render: (_, dom) => dom.pop(),
+                submitButtonProps: {
+                  loading: submitting,
+                  size: 'large',
+                  style: {
+                    width: '100%',
+                  },
+                },
+              }}
+              onFinish={async (values) => {
+                await handleSubmit(values as LoginParamsType);
+              }}
+            >
+              <Title level={1}>登录</Title>
 
-            {state && state !== 200 && (
-              <LoginMessage
-                content={message}
-              />
-            )}
-            <>
-              <ProFormText
-                name="username"
-                fieldProps={{
-                  size: 'large',
-                  prefix: <UserOutlined className={styles.prefixIcon}/>,
-                }}
-                placeholder='用户名'
-                rules={[
-                  {
-                    required: true,
-                    message: '请输入用户名!',
-                  },
-                ]}
-              />
-              <ProFormText.Password
-                name="password"
-                fieldProps={{
-                  size: 'large',
-                  prefix: <LockTwoTone className={styles.prefixIcon}/>,
-                }}
-                placeholder='密码'
-                rules={[
-                  {
-                    required: true,
-                    message: '请输入密码!',
-                  },
-                ]}
-              />
-            </>
-          </ProForm>
+              {state && state !== 200 && (
+                <LoginMessage
+                  content={message}
+                />
+              )}
+              <>
+                <ProFormText
+                  name="username"
+                  fieldProps={{
+                    size: 'large',
+                    prefix: <UserOutlined className={styles.prefixIcon}/>,
+                  }}
+                  placeholder='用户名'
+                  rules={[
+                    {
+                      required: true,
+                      message: '请输入用户名!',
+                    },
+                  ]}
+                />
+                <ProFormText.Password
+                  name="password"
+                  fieldProps={{
+                    size: 'large',
+                    prefix: <LockTwoTone className={styles.prefixIcon}/>,
+                  }}
+                  placeholder='密码'
+                  rules={[
+                    {
+                      required: true,
+                      message: '请输入密码!',
+                    },
+                  ]}
+                />
+              </>
+            </ProForm>
+          </div>
         </div>
+        <ParticlesBg type="circle" bg={true}/>
+        <Footer/>
       </div>
-      <Footer/>
-    </div>
+    </>
   );
 };
 

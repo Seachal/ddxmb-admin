@@ -14,5 +14,6 @@ export async function addNewCategory(datas: CategorySubmitParams) {
   return request('/api/blog/category-add', {
     method: 'POST',
     data: datas,
+    requestType: 'form'
   })
 }

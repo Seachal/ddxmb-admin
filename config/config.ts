@@ -11,8 +11,8 @@ export default defineConfig({
     hmr: true,
   },
   layout: {
-    name: 'Ant Design Pro',
-    locale: true,
+    name: '典典的小卖部',
+    locale: false,
     siderWidth: 208,
     ...defaultSettings,
   },

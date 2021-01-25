@@ -15,7 +15,7 @@ import {APILoginData} from "@/services/models/API.LOGIN";
  * 获取用户信息比较慢的时候会展示一个 loading
  */
 export const initialStateConfig = {
-  loading: <PageLoading/>,
+  loading: <PageLoading tip={'快速加载中'}/>,
 };
 
 export async function getInitialState(): Promise<{
