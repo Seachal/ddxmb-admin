@@ -1,54 +1,54 @@
 import * as React from "react";
-import {Button, Card, Divider, Form, Input, message, Tag} from "antd";
-import Title from "antd/lib/typography/Title";
-import {FormInstance} from "antd/lib/form";
-import {useRecoilValue, useSetRecoilState} from "recoil";
+import {Card, message} from "antd";
 import {BlogTags} from "@/pages/Blog/subpage/write/BlogWrite";
+import {useRecoilState} from "recoil";
+import {Button, Input, Spacer, Tag, Text} from "@geist-ui/react";
 
-interface Tag {
-  tag: string;
-}
 
-type Props = {
-  initTags: string[];
-}
+export default function TagComponment() {
 
-export default function TagComponment({initTags}: Props) {
+  const [blogTagList, setBlogTagList] = useRecoilState(BlogTags);
 
-  const blogTagList = useRecoilValue(BlogTags);
-  const setBlogTagList = useSetRecoilState(BlogTags);
+  const ref = React.useRef<any>(null)
 
-  console.log(`标签列表:${blogTagList}`);
-
-  let formRef = React.createRef<FormInstance>();
-
-  const submitTag = async (values: Tag) => {
-    if (!blogTagList.includes(values.tag)) {
-      setBlogTagList((oldList)
-        => [
+  // 添加标签按钮事件
+  const submitTag = async () => {
+    let tagVal = ref.current.value;
+    if(!tagVal && tagVal==""){
+      await message.warning('请输入内容');
+      return ;
+    }
+    if (!blogTagList.includes(tagVal)) {
+      setBlogTagList((oldList) => [
         ...oldList,
-        values.tag
+        tagVal
       ]);
+      setValue('');
+      await message.success('添加成功');
     } else {
-      message.error('已存在');
+      await message.error('已存在');
     }
   }
+
+  // 输入框改变事件
+  const inputChangeHandle = (e: any) => {
+    setValue(e.target.value);
+  }
+
+  const setValue = (val: string) => {
+    ref && (ref.current.value = val)
+  }
+
   return (
     <>
       <Card>
-        <Title level={1}>标签</Title>
-        <Divider/>
-        <Form onFinish={submitTag} ref={formRef}>
-          <Form.Item name={'tag'} rules={[{required: true, message: '请输入标签名'}]}>
-            <Input/>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              添加标签
-            </Button>
-          </Form.Item>
-        </Form>
-        {blogTagList?.map((value) => <Tag key={value}>{value}</Tag>)}
+        <Text h3>标签</Text>
+        <Input onChange={inputChangeHandle} ref={ref}/>
+        <Spacer y={1}/>
+        <Button auto size="small"
+                onClick={submitTag}>添加标签</Button>
+        <Spacer y={1}/>
+        {blogTagList?.map((value) => <Tag type="lite" key={value}>{value}</Tag>)}
       </Card>
 
     </>

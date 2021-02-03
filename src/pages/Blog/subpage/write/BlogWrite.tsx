@@ -3,10 +3,9 @@ import {PageContainer} from "@ant-design/pro-layout";
 import {Col, Row} from "antd";
 import WriteLeftLayout from "@/pages/Blog/components/write/left_layout";
 import WriteRightLayout from "@/pages/Blog/components/write/right_layout";
-import {atom, RecoilRoot} from "recoil";
+import {atom, RecoilRoot, selector} from "recoil";
 
 export default (): React.ReactNode => {
-
 
   return (
     <RecoilRoot>
@@ -28,4 +27,12 @@ export default (): React.ReactNode => {
 export const BlogTags = atom<string[]>({
   key: 'blog-tags',
   default: []
+})
+
+// 标签获取
+export const TagsGet = selector<string[]>({
+  key: 'blog-tags-get',
+  get: ({get}) => {
+    return get<string[]>(BlogTags);
+  }
 })

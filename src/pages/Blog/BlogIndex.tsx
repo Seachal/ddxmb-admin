@@ -6,7 +6,7 @@ export default (): React.ReactNode => {
   return (
     <PageContainer>
       <Card>
-        11
+        博客列表
       </Card>
     </PageContainer>
   );

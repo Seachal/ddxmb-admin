@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {Card, Divider} from "antd";
-import Title from "antd/lib/typography/Title";
+import {Card} from "antd";
 import CategoryListShow from "@/pages/Blog/components/write/category_list";
 import {useModel} from "@@/plugin-model/useModel";
 import {useRequest} from "@@/plugin-request/request";
@@ -28,13 +27,11 @@ const WriteLeftLayout: React.FC = () => {
     <>
 
       <Card>
-        <Title level={1}>选项</Title>
-        <Divider/>
         <CategoryListShow categorys={model.categorys} onRefresh={onRefresh}/>
       </Card>
       <div style={{height: '12px'}}/>
 
-      <TagComponment initTags={[]}/>
+      <TagComponment />
     </>
   );
 }

@@ -16,7 +16,7 @@ const CategoryListShow: React.FC<Props> = ({  categorys,onRefresh}) => {
   return (
     <>
 
-      <Text h3={true}>选择分类</Text>
+      <Text h3>选择分类</Text>
 
 
       {categorys?.map((item) => <CategoryItem key={item.id} render={item}/>)}
