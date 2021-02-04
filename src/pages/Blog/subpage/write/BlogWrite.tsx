@@ -34,5 +34,5 @@ export const TagsGet = selector<string[]>({
   key: 'blog-tags-get',
   get: ({get}) => {
     return get<string[]>(BlogTags);
-  }
+  },
 })

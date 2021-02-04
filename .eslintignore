@@ -1,6 +1,7 @@
 /lambda/
 /scripts
 /config
+/src
 .history
 public
 dist
