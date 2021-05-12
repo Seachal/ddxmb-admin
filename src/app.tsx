@@ -1,21 +1,21 @@
 import React from 'react';
-import type {Settings as LayoutSettings} from '@ant-design/pro-layout';
-import {PageLoading} from '@ant-design/pro-layout';
-import {notification} from 'antd';
-import type {RequestConfig, RunTimeLayoutConfig} from 'umi';
-import {history} from 'umi';
+import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
+import { PageLoading } from '@ant-design/pro-layout';
+import { message, notification } from 'antd';
+import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
+import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
-import type {ResponseError} from 'umi-request';
-import {queryCurrent} from './services/user';
+import type { RequestOptionsInit, ResponseError } from 'umi-request';
+import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
-import {APILoginData} from "@/services/models/API.LOGIN";
+import { APILoginData } from '@/services/models/API.LOGIN';
 
 /**
  * 获取用户信息比较慢的时候会展示一个 loading
  */
 export const initialStateConfig = {
-  loading: <PageLoading tip={'快速加载中'}/>,
+  loading: <PageLoading tip={'快速加载中'} />,
 };
 
 export async function getInitialState(): Promise<{
@@ -29,8 +29,9 @@ export async function getInitialState(): Promise<{
       if (typeof currentUser === 'object' && currentUser) {
         if (currentUser.state === 200) {
           return currentUser;
+        } else {
+          message.error(currentUser.message);
         }
-
       }
       history.push('/user/login');
     } catch (error) {
@@ -53,13 +54,13 @@ export async function getInitialState(): Promise<{
   };
 }
 
-export const layout: RunTimeLayoutConfig = ({initialState}) => {
+export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
-    rightContentRender: () => <RightContent/>,
+    rightContentRender: () => <RightContent />,
     disableContentMargin: false,
-    footerRender: () => <Footer/>,
+    footerRender: () => <Footer />,
     onPageChange: () => {
-      const {location} = history;
+      const { location } = history;
       // 如果没有登录，重定向到 login
       if (!initialState?.currentUser && location.pathname !== '/user/login') {
         history.push('/user/login');
@@ -95,10 +96,10 @@ const codeMessage = {
  * 异常处理程序
  */
 const errorHandler = (error: ResponseError) => {
-  const {response} = error;
+  const { response } = error;
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
-    const {status, url} = response;
+    const { status, url } = response;
 
     notification.error({
       message: `请求错误 ${status}: ${url}`,
@@ -115,6 +116,15 @@ const errorHandler = (error: ResponseError) => {
   throw error;
 };
 
+const authHeaderInterceptor = (url: string, options: RequestOptionsInit) => {
+  const authHeader = { Authorization: 'fc4a36935ffa48dc9418815ccbe20176' };
+  return {
+    url: `${url}`,
+    options: { ...options, interceptors: true, headers: authHeader },
+  };
+};
+
 export const request: RequestConfig = {
   errorHandler,
+  requestInterceptors: [authHeaderInterceptor],
 };

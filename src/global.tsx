@@ -89,7 +89,7 @@ if (pwa) {
   }
 
   serviceWorker.getRegistration().then((sw) => {
-    if (sw) sw.unregister();
+    if (sw) sw.unregister().then((r) => {});
   }); // remove all caches
 
   if (window.caches && window.caches.keys) {

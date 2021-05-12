@@ -29,15 +29,15 @@
         path: '/blog/list',
         name: '博客列表',
         icon: 'list',
-        component: './Blog/BlogIndex'
+        component: './Blog/BlogIndex',
       },
       {
         path: '/blog/write',
         name: '发布博客',
         icon: 'push',
-        component: './Blog/subpage/write/BlogWrite'
-      }
-    ]
+        component: './Blog/subpage/write/BlogWrite',
+      },
+    ],
   },
   {
     path: '/app',
@@ -47,9 +47,15 @@
         path: '/app/aplay',
         name: '我的应用',
         icon: 'applications',
-        component: './Application/Index'
-      }
-    ]
+        component: './Application/Index',
+      },
+      {
+        path: '/app/version',
+        name: '版本管理',
+        icon: 'plus',
+        component: './File/version',
+      },
+    ],
   },
   {
     path: '/admin',

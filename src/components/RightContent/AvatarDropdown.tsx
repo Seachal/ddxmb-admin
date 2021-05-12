@@ -17,9 +17,8 @@ export type GlobalHeaderRightProps = {
 const loginOut = async () => {
   await outLogin();
   const { query, pathname } = history.location;
-  const { redirect } = query;
+  const { redirect } = query as any;
   console.log(redirect);
-  // Note: There may be security issues, please note
   if (window.location.pathname !== '/user/login' && !redirect) {
     history.replace({
       pathname: '/user/login',
@@ -43,7 +42,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       const { key } = event;
       if (key === 'logout' && initialState) {
         setInitialState({ ...initialState, currentUser: undefined });
-        loginOut();
+        loginOut().then((r) => {});
         return;
       }
       history.push(`/account/${key}`);
@@ -98,7 +97,12 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   return (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
-        <Avatar size="small" className={styles.avatar} src={currentUser.data.principal.picture} alt="avatar" />
+        <Avatar
+          size="small"
+          className={styles.avatar}
+          src={currentUser.data.principal.picture}
+          alt="avatar"
+        />
         <span className={`${styles.name} anticon`}>{currentUser.data.principal.username}</span>
       </span>
     </HeaderDropdown>

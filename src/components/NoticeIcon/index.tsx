@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Tag, message } from 'antd';
 import { groupBy } from 'lodash';
 import moment from 'moment';
-import { useModel } from 'umi';
 import { queryNotices } from '@/services/user';
 
 import NoticeIcon from './NoticeIcon';
@@ -71,8 +70,7 @@ const getUnreadData = (noticeData: Record<string, API.NoticeIconData[]>) => {
 };
 
 const NoticeIconView = () => {
-  const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
+  // const { initialState } = useModel('@@initialState');
   const [notices, setNotices] = useState<API.NoticeIconData[]>([]);
 
   useEffect(() => {
@@ -104,13 +102,13 @@ const NoticeIconView = () => {
         return notice;
       }),
     );
-    message.success(`${'清空了'} ${title}`);
+    message.success(`${'清空了'} ${title}`).then((r) => {});
   };
 
   return (
     <NoticeIcon
       className={styles.action}
-      count={currentUser && currentUser.unreadCount}
+      count={1}
       onItemClick={(item) => {
         changeReadState(item.id);
       }}

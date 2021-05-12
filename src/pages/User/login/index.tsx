@@ -1,21 +1,17 @@
-import {
-  LockTwoTone,
-  UserOutlined,
-} from '@ant-design/icons';
-import {Alert, message as msg} from 'antd';
-import React, {useState} from 'react';
-import ProForm, {ProFormText} from '@ant-design/pro-form';
-import {Link, history, useModel} from 'umi';
+import { LockTwoTone, UserOutlined } from '@ant-design/icons';
+import { Alert, message as msg } from 'antd';
+import React, { useState } from 'react';
+import ProForm, { ProFormText } from '@ant-design/pro-form';
+import { Link, history, useModel } from 'umi';
 import Footer from '@/components/Footer';
-import type {LoginParamsType} from '@/services/login';
-import {fakeAccountLogin} from '@/services/login';
+import type { LoginParamsType } from '@/services/login';
+import { fakeAccountLogin } from '@/services/login';
 import styles from './index.less';
 import Title from 'antd/lib/typography/Title';
-import ParticlesBg from 'particles-bg';
 
 const LoginMessage: React.FC<{
   content?: string;
-}> = ({content}) => (
+}> = ({ content }) => (
   <Alert
     style={{
       marginBottom: 24,
@@ -32,8 +28,8 @@ const LoginMessage: React.FC<{
 const goto = () => {
   if (!history) return;
   setTimeout(() => {
-    const {query} = history.location;
-    const {redirect} = query as {
+    const { query } = history.location;
+    const { redirect } = query as {
       redirect: string;
     };
     history.push(redirect || '/');
@@ -43,13 +39,13 @@ const goto = () => {
 const Login: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [userLoginState, setUserLoginState] = useState<API.LoginStateType>({});
-  const {initialState, setInitialState} = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState');
 
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
 
     if (userInfo) {
-      setInitialState({...initialState, currentUser: userInfo});
+      setInitialState({ ...initialState, currentUser: userInfo });
     }
   };
 
@@ -58,7 +54,7 @@ const Login: React.FC = () => {
 
     try {
       // 登录
-      const res = await fakeAccountLogin({...values});
+      const res = await fakeAccountLogin({ ...values });
       if (res.state === 200) {
         msg.success('登录成功！');
         await fetchUserInfo();
@@ -74,7 +70,7 @@ const Login: React.FC = () => {
     setSubmitting(false);
   };
 
-  const {state, message} = userLoginState;
+  const { state, message } = userLoginState;
   return (
     <>
       <div className={styles.container}>
@@ -82,7 +78,7 @@ const Login: React.FC = () => {
           <div className={styles.top}>
             <div className={styles.header}>
               <Link to="/">
-                <img alt="logo" className={styles.logo} src={"/logo.svg"}/>
+                <img alt="logo" className={styles.logo} src={'/logo.svg'} />
                 <span className={styles.title}>握草</span>
               </Link>
             </div>
@@ -113,19 +109,15 @@ const Login: React.FC = () => {
             >
               <Title level={1}>登录</Title>
 
-              {state && state !== 200 && (
-                <LoginMessage
-                  content={message}
-                />
-              )}
+              {state && state !== 200 && <LoginMessage content={message} />}
               <>
                 <ProFormText
                   name="username"
                   fieldProps={{
                     size: 'large',
-                    prefix: <UserOutlined className={styles.prefixIcon}/>,
+                    prefix: <UserOutlined className={styles.prefixIcon} />,
                   }}
-                  placeholder='用户名'
+                  placeholder="用户名"
                   rules={[
                     {
                       required: true,
@@ -137,9 +129,9 @@ const Login: React.FC = () => {
                   name="password"
                   fieldProps={{
                     size: 'large',
-                    prefix: <LockTwoTone className={styles.prefixIcon}/>,
+                    prefix: <LockTwoTone className={styles.prefixIcon} />,
                   }}
-                  placeholder='密码'
+                  placeholder="密码"
                   rules={[
                     {
                       required: true,
@@ -151,8 +143,7 @@ const Login: React.FC = () => {
             </ProForm>
           </div>
         </div>
-        <ParticlesBg type="circle" bg={true}/>
-        <Footer/>
+        <Footer />
       </div>
     </>
   );
