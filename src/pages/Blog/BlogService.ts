@@ -21,7 +21,7 @@ export async function addNewCategory(datas: CategorySubmitParams) {
 }
 
 // 获取博客列表
-export async function getBlogList(params: FindBlogParams) {
+export async function getBlogList(params: FindBlogParams): Promise<BlogAllData> {
   const genderUrl = `/api/blog/list?page=${params.page}&pageSize=${params.pageSize ?? 10}`;
   return request<BlogAllData>(genderUrl);
 }

@@ -5,65 +5,50 @@
 //   const blogAllData = Convert.toBlogAllData(json);
 
 export interface BlogAllData {
-  state:   number;
+  state: number;
   message: string;
-  data:    JpaPager;
+  data: DataMap;
 }
 
-export interface JpaPager {
-  content:          BlogObject[];
-  pageable:         Pageable;
-  totalElements:    number;
-  last:             boolean;
-  totalPages:       number;
-  number:           number;
-  size:             number;
-  sort:             Sort;
-  numberOfElements: number;
-  first:            boolean;
-  empty:            boolean;
+interface DataMap {
+  list: BlogObject[];
+  page: Page;
+}
+
+export interface Page {
+  currentPage: number;
+  hasPrevious: boolean;
+  maxPage: number;
+  pageSize: number;
+  paged: boolean;
+  total: number;
 }
 
 export interface BlogObject {
-  id:         number;
-  title:      string;
-  content:    string;
+  id: number;
+  title: string;
+  content: string;
   createTime: number;
-  category:   Category;
-  author:     string;
-  thumbnail?:  string;
+  category: Category;
+  author: string;
+  thumbnail?: string;
 }
 
 export interface Category {
-  id:         number;
-  name:       string;
-  logo:       string;
-  intro:      string;
+  id: number;
+  name: string;
+  logo: string;
+  intro: string;
   createTime: number;
 }
-
-export interface Pageable {
-  sort:       Sort;
-  offset:     number;
-  pageNumber: number;
-  pageSize:   number;
-  paged:      boolean;
-  unpaged:    boolean;
-}
-
-export interface Sort {
-  sorted:   boolean;
-  unsorted: boolean;
-  empty:    boolean;
-}
-
-// Converts JSON strings to/from your types
-export class Convert {
-  public static toBlogAllData(json: string): BlogAllData {
-    return JSON.parse(json);
-  }
-
-  public static blogAllDataToJson(value: BlogAllData): string {
-    return JSON.stringify(value);
-  }
-}
+//
+// // Converts JSON strings to/from your types
+// export class Convert {
+//   public static toBlogAllData(json: string): BlogAllData {
+//     return JSON.parse(json);
+//   }
+//
+//   public static blogAllDataToJson(value: BlogAllData): string {
+//     return JSON.stringify(value);
+//   }
+// }

@@ -68,9 +68,9 @@ export default (): React.ReactNode => {
               page: params.current ?? 0,
               pageSize: params.pageSize,
             });
-            return { data: data.data.content, success: data && data.state == 200 };
+            return { data: data.data.list, success: data && data.state == 200 };
           }}
-        ></ProTable>
+        />
 
         <InputDailog
           onOk={(value) => {
