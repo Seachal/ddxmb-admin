@@ -1,5 +1,5 @@
 import { LockTwoTone, UserOutlined } from '@ant-design/icons';
-import { Alert, message as msg } from 'antd';
+import { Alert, message as msg, Modal } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { Link, history, useModel } from 'umi';
@@ -8,6 +8,7 @@ import type { LoginParamsType } from '@/services/login';
 import { fakeAccountLogin } from '@/services/login';
 import styles from './index.less';
 import Title from 'antd/lib/typography/Title';
+import ScanCodeComponent from '@/pages/User/login/scanCode';
 
 const LoginMessage: React.FC<{
   content?: string;
@@ -82,7 +83,7 @@ const Login: React.FC = () => {
                 <span className={styles.title}>握草</span>
               </Link>
             </div>
-            <div className={styles.desc}>典典的小卖部,最强的开源跨平台淘宝客APP应用</div>
+            {/*<div className={styles.desc}>典典的小卖部,最强的开源跨平台淘宝客APP应用</div>*/}
           </div>
 
           <div className={styles.main}>
@@ -142,6 +143,13 @@ const Login: React.FC = () => {
               </>
             </ProForm>
           </div>
+          <ScanCodeComponent
+            onSuccess={(token) => {
+              Modal.success({
+                content: '登录成功: 用户token:' + token,
+              });
+            }}
+          />
         </div>
         <Footer />
       </div>
